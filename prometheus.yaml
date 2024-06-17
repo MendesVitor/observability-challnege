@@ -1,0 +1,11 @@
+global:
+    scrape_interval: 15s
+
+scrape_configs:
+    - job_name: 'servico-a'
+      static_configs:
+          - targets: ['servico-a:8080']
+
+    - job_name: 'servico-b'
+      static_configs:
+          - targets: ['servico-b:8081']

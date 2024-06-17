@@ -1,0 +1,30 @@
+###
+# Request to /consulta endpoint with valid CEP
+POST http://localhost:8080/consulta
+Content-Type: application/json
+
+{
+  "cep": "18017123"
+}
+
+###
+
+###
+# Request to /consulta endpoint with invalid CEP (less than 8 digits)
+POST http://localhost:8080/consulta
+Content-Type: application/json
+
+{
+  "cep": "1801700"
+}
+
+###
+
+###
+# Request to /consulta endpoint with invalid CEP (more than 8 digits)
+POST http://localhost:8080/consulta
+Content-Type: application/json
+
+{
+  "cep": "180170051"
+}

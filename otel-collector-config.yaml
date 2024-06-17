@@ -1,0 +1,29 @@
+receivers:
+    otlp:
+        protocols:
+            grpc:
+
+exporters:
+    prometheus:
+        endpoint: '0.0.0.0:9090'
+
+    logging:
+
+    otlp:
+        endpoint: zipkin:9411
+        tls:
+            insecure: true
+
+processors:
+    batch:
+
+service:
+    pipelines:
+        traces:
+            receivers: [otlp]
+            processors: [batch]
+            exporters: [logging, otlp]
+        metrics:
+            receivers: [otlp]
+            processors: [batch]
+            exporters: [logging, prometheus]
