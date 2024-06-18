@@ -77,7 +77,16 @@ func handleWeatherRequest(w http.ResponseWriter, r *http.Request) {
 
 	location, err := getLocationByCEP(ctx, cep)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusNotFound)
+		errorResponse := struct {
+			Error      string `json:"error"`
+			StatusCode int    `json:"statuscode"`
+		}{
+			Error:      "zip code not found",
+			StatusCode: http.StatusNotFound,
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode(errorResponse)
 		return
 	}
 
@@ -116,7 +125,7 @@ func getLocationByCEP(ctx context.Context, cep string) (string, error) {
 	}
 
 	if viaCEP.Erro {
-		return "", fmt.Errorf("can not find zipcode")
+		return "", fmt.Errorf("zipcode not found")
 	}
 
 	return viaCEP.Localidade, nil

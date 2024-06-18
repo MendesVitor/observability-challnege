@@ -4,8 +4,18 @@ POST http://localhost:8080/consulta
 Content-Type: application/json
 
 {
+  "cep": "18017000"
+}
+
+###
+# Request to /consulta endpoint with valid but non existant CEP
+POST http://localhost:8080/consulta
+Content-Type: application/json
+
+{
   "cep": "18017123"
 }
+
 
 ###
 

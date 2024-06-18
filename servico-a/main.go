@@ -94,7 +94,8 @@ func handleQuery(w http.ResponseWriter, r *http.Request) {
 
 	if resp.StatusCode != http.StatusOK {
 		var errorMsg struct {
-			Error string `json:"error"`
+			Error      string `json:"error"`
+			StatusCode int    `json:"statuscode"`
 		}
 		err = json.NewDecoder(resp.Body).Decode(&errorMsg)
 		if err != nil {
@@ -102,7 +103,7 @@ func handleQuery(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		http.Error(w, errorMsg.Error, resp.StatusCode)
+		http.Error(w, errorMsg.Error, errorMsg.StatusCode)
 		return
 	}
 
